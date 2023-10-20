@@ -9,18 +9,16 @@ const app = express();
 // Base de datos
 dbConnection();
 
-// Configurar CORS use es un Middleware
+// Configurar CORS (use es un Middleware)
 app.use( cors() );
 
-//Rutas
-app.get( '/', (req,res)=>{
+// Lectura y parseo del body
+app.use( express.json());
 
-    res.json({
-        ok:true,
-        msg: 'Hola mundo'
-    });
+//Rutas Middleware de rutas
+app.use( '/api/usuarios', require('./routes/usuarios'));
+app.use( '/api/login', require('./routes/auth'));
 
-} );
 
 app.listen( process.env.PORT, () =>{
     console.log(`Servidor corriendo en puerto ${process.env.PORT}`);
