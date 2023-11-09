@@ -8,11 +8,12 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 const { getUsuarios, crearUsuarios, updateUsuario, deleteUsuario } = require('../controllers/usuarios');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = new Router();
 
 // Traer usuarios desde BDD
-router.get( '/', getUsuarios );
+router.get( '/', validarJWT ,getUsuarios );
 
 // Para validar usamos el Middleware de express-validator chack y un custom middleware validarCampos al insertar usuario en BDD
 router.post( '/',
@@ -27,6 +28,7 @@ crearUsuarios );
 // Actualizar usuario
 router.put( '/:id',
 [
+    validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('email', 'El Email es obligatorio').isEmail(),
     check('role', 'El role es obligatorio').not().isEmpty(),
@@ -35,6 +37,8 @@ router.put( '/:id',
 updateUsuario );
 
 // Borrar usuario
-router.delete( '/:id', deleteUsuario );
+router.delete( '/:id', 
+validarJWT,
+deleteUsuario );
 
 module.exports = router;

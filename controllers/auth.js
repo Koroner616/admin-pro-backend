@@ -7,6 +7,7 @@ const { generarJWT } = require('../helpers/jwt');
 const login = async (req, res=response) => {
 
     const { email, password } = req.body;
+    console.log(email, password);
 
     try {
         // Verificar Email
