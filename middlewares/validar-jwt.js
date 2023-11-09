@@ -4,11 +4,6 @@ const validarJWT = (req,res,next) => {
     //Leer token
     const token = req.header('x-token');
 
-    jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-        console.log(err)
-        console.log(decoded) // bar
-      });
-
     if (!token) {
         return res.status(401).json({
             ok:false,
